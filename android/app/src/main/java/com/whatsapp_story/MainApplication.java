@@ -11,6 +11,7 @@ import io.invertase.firebase.RNFirebasePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 
 import java.util.List;
 

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "617816405594",
+    "firebase_url": "https://a1-seller.firebaseio.com",
+    "project_id": "a1-seller",
+    "storage_bucket": "a1-seller.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:617816405594:android:26b539e4b13c1f7293ca63",
+        "android_client_info": {
+          "package_name": "com.whatsapp_story"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "617816405594-6pjrp9ltas0pjd8kuajpcb1l7abekh4a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz83uQLG7oyBWW3ikkK9WvCQ_j46CaE_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "617816405594-6pjrp9ltas0pjd8kuajpcb1l7abekh4a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

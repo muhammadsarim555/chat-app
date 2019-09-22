@@ -13,6 +13,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 
+
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {

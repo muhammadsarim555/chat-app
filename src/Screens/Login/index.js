@@ -10,6 +10,8 @@ import {
   Alert,
 } from 'react-native';
 
+import { TabView, SceneMap } from 'react-native-tab-view';
+
 export default class LoginView extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +22,8 @@ export default class LoginView extends Component {
   }
 
   onClickListener = viewId => {
-    Alert.alert('Alert', 'Button pressed ' + viewId);
+    // Alert.alert('Alert', 'Button pressed ' + viewId);
+    this.props.navigation.navigate(viewId)
   };
 
   render() {
@@ -58,7 +61,7 @@ export default class LoginView extends Component {
 
         <TouchableHighlight
           style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => this.onClickListener('login')}>
+          onPress={() => this.onClickListener('TabScreen')}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
       </View>

@@ -6,10 +6,11 @@ import Login from '../Screens/Login';
 import {TabScreens} from '../Screens/Home';
 import Register from '../Screens/Register';
 
-const {Chat, Status} = TabScreens;
+const {Chat, Status, Users} = TabScreens;
 
 const TabScreen = createMaterialTopTabNavigator(
   {
+    Users: {screen: Users},
     Chat: {screen: Chat},
     Status: {screen: Status},
   },

@@ -4,6 +4,7 @@ import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 
 import Login from '../Screens/Login';
 import {TabScreens} from '../Screens/Home';
+import Register from '../Screens/Register';
 
 const {Chat, Status} = TabScreens;
 
@@ -40,6 +41,12 @@ const AppNavigator = createStackNavigator({
       header: null,
     },
   },
+  Register: {
+    screen: Register,
+    navigationOptions: {
+      header: null,
+    },
+  },
   TabScreen: {
     screen: TabScreen,
     navigationOptions: {
@@ -47,7 +54,8 @@ const AppNavigator = createStackNavigator({
         backgroundColor: '#633689',
       },
       headerTintColor: '#FFFFFF',
-      title: 'TabExample',
+      headerLeft: null,
+      title: 'Story',
     },
   },
 });

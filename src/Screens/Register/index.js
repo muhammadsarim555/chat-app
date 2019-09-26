@@ -19,7 +19,7 @@ export default class Register extends Component {
     state = {
       email: '',
       password: '',
-      name: ''
+      name: '',
     };
   }
 
@@ -28,25 +28,23 @@ export default class Register extends Component {
   };
 
   signUp = () => {
-    const {email, password} = this.state;
+    const {email, password, name} = this.state;
+    const id = firebase.auth().currentUser.uid;
 
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(user => {
-        // this.setState({signin: true, signup: false});
-
-        // firebase
-        //   .database()
-        //   .ref('/Hospitals')
-        //   .child(`${firebase.auth().currentUser.uid}`)
-        //   .set({
-        //     Email: this.state.emailsignup,
-        //     HospitalName: this.state.hospitalname,
-        //     Branch: this.state.branchname,
-        //     Phoneno: this.state.phoneno,
-        //   });
-        console.log(user);
+        firebase
+          .database()
+          .ref('/StoryAppUsers')
+          .child(`${firebase.auth().currentUser.uid}`)
+          .set({
+            email,
+            password,
+            name,
+          })
+          .then(s => console.log('data has been added'));
       })
       .catch(error => {
         console.log(error);
@@ -57,12 +55,23 @@ export default class Register extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.inputs}
+            placeholder="Name"
+            keyboardType="email-address"
+            underlineColorAndroid="transparent"
+            onChangeText={name => this.setState({name})}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
           <Image
             style={styles.inputIcon}
             source={{
               uri: 'https://png.icons8.com/message/ultraviolet/50/3498db',
             }}
           />
+
           <TextInput
             style={styles.inputs}
             placeholder="Email"

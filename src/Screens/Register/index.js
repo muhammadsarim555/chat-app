@@ -10,17 +10,47 @@ import {
   Alert,
 } from 'react-native';
 
+// PACKAGES
+import firebase from 'react-native-firebase';
+
 export default class Register extends Component {
   constructor(props) {
     super(props);
     state = {
       email: '',
       password: '',
+      name: ''
     };
   }
 
   onClickListener = viewId => {
     this.props.navigation.navigate(viewId);
+  };
+
+  signUp = () => {
+    const {email, password} = this.state;
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(user => {
+        // this.setState({signin: true, signup: false});
+
+        // firebase
+        //   .database()
+        //   .ref('/Hospitals')
+        //   .child(`${firebase.auth().currentUser.uid}`)
+        //   .set({
+        //     Email: this.state.emailsignup,
+        //     HospitalName: this.state.hospitalname,
+        //     Branch: this.state.branchname,
+        //     Phoneno: this.state.phoneno,
+        //   });
+        console.log(user);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   render() {
@@ -58,11 +88,12 @@ export default class Register extends Component {
 
         <TouchableHighlight
           style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => this.onClickListener('TabScreen')}>
+          onPress={() => this.signUp('TabScreen')}>
           <Text style={styles.loginText}>Register</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight onPress={() => this.props.navigation.navigate("Login")}>
+        <TouchableHighlight
+          onPress={() => this.props.navigation.navigate('Login')}>
           <Text>Login</Text>
         </TouchableHighlight>
       </View>

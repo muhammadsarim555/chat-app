@@ -12,6 +12,9 @@ import {
 
 import {TabView, SceneMap} from 'react-native-tab-view';
 
+import firebase from 'react-native-firebase';
+  
+
 export default class LoginView extends Component {
   constructor(props) {
     super(props);
@@ -21,10 +24,32 @@ export default class LoginView extends Component {
     };
   }
 
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      user ? alert('user ') : alert('not here');
+    });
+  }
+
   onClickListener = viewId => {
     // Alert.alert('Alert', 'Button pressed ' + viewId);
     this.props.navigation.navigate(viewId);
   };
+
+  login=()=>{
+    const {email, password} = this.state
+
+    firebase.auth().signInWithEmailAndPassword(email, password).then((user)=>{
+        if(user){
+       alert("user has logged in")
+      
+    }
+    else{
+        this.setState({user:false});
+    }
+    }).catch((error)=>{
+      alert("ponka nikal")
+    })
+}
 
   render() {
     return (
@@ -61,7 +86,7 @@ export default class LoginView extends Component {
 
         <TouchableHighlight
           style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => this.onClickListener('TabScreen')}>
+          onPress={() => this.login('TabScreen')}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
 

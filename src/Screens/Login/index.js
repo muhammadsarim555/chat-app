@@ -24,11 +24,11 @@ export default class LoginView extends Component {
     };
   }
 
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      user ? alert('user ') : alert('not here');
-    });
-  }
+  // componentDidMount() {
+  //   firebase.auth().onAuthStateChanged(user => {
+  //     user ? alert('user ') : alert('not here');
+  //   });
+  // }
 
   onClickListener = viewId => {
     // Alert.alert('Alert', 'Button pressed ' + viewId);

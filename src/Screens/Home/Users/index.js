@@ -10,6 +10,9 @@ import {
   FlatList,
 } from 'react-native';
 
+// FILES
+import firebase from "react-native-firebase"
+
 
 export default class Calls extends Component {
   constructor(props) {
@@ -101,6 +104,17 @@ export default class Calls extends Component {
   }
 
 
+componentDidMount(){
+  var leadsRef = firebase.database().ref('StoryAppUsers/')
+  // .child("StoryAppUsers");
+  leadsRef.on('value', function(snapshot) {
+      // snapshot.forEach(function(childSnapshot) {
+        // var childData = childSnapshot.val();
+      // });
+      console.log(snapshot.val())
+  });
+}
+
 
   renderItem = ({item}) => {
     var callIcon = 'https://img.icons8.com/color/48/000000/phone.png';
@@ -108,6 +122,7 @@ export default class Calls extends Component {
       callIcon = 'https://img.icons8.com/color/48/000000/video-call.png';
     }
     return (
+      <View>
       <TouchableOpacity>
         <View style={styles.row}>
           <Image source={{uri: item.image}} style={styles.pic} />
@@ -136,6 +151,17 @@ export default class Calls extends Component {
           />
         </View>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => firebase.auth().signOut()
+        .then((s) => {
+          alert("logout")
+        })
+        .catch((error) => {
+          alert("not logout")
+
+        })}>
+        <Text>logout</Text>
+      </TouchableOpacity>
+      </View>
     );
   };
 

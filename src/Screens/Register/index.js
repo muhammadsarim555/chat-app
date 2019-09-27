@@ -23,31 +23,27 @@ export default class Register extends Component {
     };
   }
 
-  onClickListener = viewId => {
-    this.props.navigation.navigate(viewId);
-  };
-
   signUp = () => {
     const {email, password, name} = this.state;
-    const id = firebase.auth().currentUser.uid;
-
+    // const id = firebase.auth().currentUser.uid;
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(user => {
+      .then((user) => {
+        console.log(user.user._user.uid)
+
+
         firebase
           .database()
-          .ref('/StoryAppUsers')
-          .child(`${firebase.auth().currentUser.uid}`)
+          .ref('/Profiles')
+          .child(user.user._user.uid)
           .set({
             email,
             password,
-            name,
+            name
           })
-          .then(s => console.log('data has been added'));
-      })
-      .catch(error => {
-        console.log(error);
+          .then(s => console.log(s))
+          .catch(e => console.log(e));
       });
   };
 
@@ -97,7 +93,7 @@ export default class Register extends Component {
 
         <TouchableHighlight
           style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => this.signUp('TabScreen')}>
+          onPress={() => this.signUp()}>
           <Text style={styles.loginText}>Register</Text>
         </TouchableHighlight>
 

@@ -102,7 +102,7 @@ export default class Register extends Component {
         </TouchableHighlight>
 
         <TouchableHighlight
-          onPress={() => this.props.navigation.navigate('Login')}>
+          onPress={() => this.props.navigation.navigate('CompleteProfile')}>
           <Text>Login</Text>
         </TouchableHighlight>
       </View>

@@ -1,10 +1,12 @@
-import {createAppContainer} from 'react-navigation';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 
 import Login from '../Screens/Login';
 import {TabScreens} from '../Screens/Home';
 import Register from '../Screens/Register';
+import AuthLoader from '../Component/ActivityIndicator';
+import CompleteProfile from '../Screens/CompleteProfile';
 
 const {Chat, Status, Users} = TabScreens;
 
@@ -35,17 +37,27 @@ const TabScreen = createMaterialTopTabNavigator(
   },
 );
 
-const AppNavigator = createStackNavigator({
+const AuthStack = createStackNavigator({
   Login: {
     screen: Login,
     navigationOptions: {
       header: null,
     },
   },
+});
+
+const AppStack = createStackNavigator({
   Register: {
     screen: Register,
     navigationOptions: {
       header: null,
+    },
+  },
+  CompleteProfile: {
+    screen: CompleteProfile,
+    navigationOptions: {
+      // header: null,
+      headerLeft: null,
     },
   },
   TabScreen: {
@@ -61,4 +73,15 @@ const AppNavigator = createStackNavigator({
   },
 });
 
-export default createAppContainer(AppNavigator);
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      AuthLoading: AuthLoader,
+      App: AppStack,
+      Auth: AuthStack,
+    },
+    {
+      initialRouteName: 'AuthLoading',
+    },
+  ),
+);

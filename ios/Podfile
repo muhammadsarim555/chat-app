@@ -29,6 +29,8 @@ target 'whatsapp_story' do
 
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'whatsapp_storyTests' do
     inherit! :search_paths
     # Pods for testing

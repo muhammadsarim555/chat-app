@@ -18,6 +18,7 @@ export default class Calls extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      users: [],
       calls: [
         {
           id: 1,
@@ -105,13 +106,20 @@ export default class Calls extends Component {
 
 
 componentDidMount(){
+  let users = [];
+  let that = this
   var leadsRef = firebase.database().ref('StoryAppUsers/')
   // .child("StoryAppUsers");
+
   leadsRef.on('value', function(snapshot) {
-      // snapshot.forEach(function(childSnapshot) {
-        // var childData = childSnapshot.val();
-      // });
-      console.log(snapshot.val())
+      snapshot.forEach(function(childSnapshot) {
+        var childData = childSnapshot.val();
+
+        users.push(childData)
+        that.setState({users})
+
+        console.log(childData,"iqra")
+      });
   });
 }
 
@@ -166,6 +174,8 @@ componentDidMount(){
   };
 
   render() {
+    const {users} = this.state
+
     return (
       <View style={{flex: 1}}>
         <FlatList

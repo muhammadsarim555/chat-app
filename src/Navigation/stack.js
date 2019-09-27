@@ -76,7 +76,7 @@ const AppStack = createStackNavigator({
 export default createAppContainer(
   createSwitchNavigator(
     {
-      AuthLoading: Register,
+      AuthLoading: AuthLoader,
       App: AppStack,
       Auth: AuthStack,
     },

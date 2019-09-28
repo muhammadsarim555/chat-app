@@ -1,20 +1,26 @@
+import React, {Component} from 'react';
+import {Button} from 'react-native';
+
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
+import LogOut from 'react-native-vector-icons/AntDesign';
+import firebase from 'react-native-firebase';
 
 import Login from '../Screens/Login';
 import {TabScreens} from '../Screens/Home';
 import Register from '../Screens/Register';
 import AuthLoader from '../Component/ActivityIndicator';
 import CompleteProfile from '../Screens/CompleteProfile';
+import {TouchableOpacity, View} from 'react-native';
 
-const {Chat, Status, Users} = TabScreens;
+const {Chat, Status, Users, Call} = TabScreens;
 
 const TabScreen = createMaterialTopTabNavigator(
   {
     Users: {screen: Users},
-    Chat: {screen: Chat},
     Status: {screen: Status},
+    Call: {screen: Call},
   },
   {
     tabBarPosition: 'top',
@@ -69,6 +75,39 @@ const AppStack = createStackNavigator({
       headerTintColor: '#FFFFFF',
       headerLeft: null,
       title: 'Story',
+      headerRight: (
+        <TouchableOpacity
+          onPress={() =>
+            firebase
+              .auth()
+              .signOut()
+              .then(s => {
+                alert('logout');
+              })
+              .catch(error => {
+                alert('not logout');
+              })
+          }>
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 40,
+            }}>
+            <LogOut name="logout" size={30} color="white" />
+          </View>
+        </TouchableOpacity>
+      ),
+    },
+  },
+  Chat: {
+    screen: Chat,
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: '#633689',
+      },
+      headerTintColor: '#FFFFFF',
+      title: 'Chat',
     },
   },
 });

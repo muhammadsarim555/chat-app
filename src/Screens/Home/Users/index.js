@@ -10,8 +10,11 @@ import {
   FlatList,
 } from 'react-native';
 
-// FILES
+// PACKAGES
 import firebase from 'react-native-firebase';
+
+// FILES
+import styles from './style';
 
 export default class Calls extends Component {
   constructor(props) {
@@ -36,9 +39,7 @@ export default class Calls extends Component {
       });
   }
 
-  filterCurrentUser = () => {
-   
-  };
+  filterCurrentUser = () => {};
 
   renderItem = ({item}) => {
     var callIcon = 'https://img.icons8.com/color/48/000000/phone.png';
@@ -47,7 +48,8 @@ export default class Calls extends Component {
     }
     return (
       <View>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Chat')}>
           <View style={styles.row}>
             <Image
               source={{
@@ -78,25 +80,7 @@ export default class Calls extends Component {
                 </Text>
               </View>
             </View>
-            <Image
-              style={[styles.icon, {marginRight: 50}]}
-              source={{uri: callIcon}}
-            />
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            firebase
-              .auth()
-              .signOut()
-              .then(s => {
-                alert('logout');
-              })
-              .catch(error => {
-                alert('not logout');
-              })
-          }>
-          <Text>logout</Text>
         </TouchableOpacity>
       </View>
     );
@@ -113,8 +97,7 @@ export default class Calls extends Component {
       users.splice(index, 1);
     }
 
-    allUsers = users
-    
+    allUsers = users;
 
     this.filterCurrentUser();
 
@@ -132,49 +115,3 @@ export default class Calls extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#dcdcdc',
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    padding: 10,
-    justifyContent: 'space-between',
-  },
-  pic: {
-    borderRadius: 25,
-    width: 50,
-    height: 50,
-  },
-  nameContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: 270,
-  },
-  nameTxt: {
-    marginLeft: 15,
-    fontWeight: '600',
-    color: '#222',
-    fontSize: 15,
-  },
-  mblTxt: {
-    fontWeight: '200',
-    color: '#777',
-    fontSize: 13,
-  },
-  end: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  time: {
-    fontWeight: '400',
-    color: '#666',
-    fontSize: 12,
-  },
-  icon: {
-    height: 28,
-    width: 28,
-  },
-});

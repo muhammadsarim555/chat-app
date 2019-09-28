@@ -25,14 +25,12 @@ export default class Register extends Component {
 
   signUp = () => {
     const {email, password, name} = this.state;
+    // const currentUser = firebase.auth().currentUser.uid;
 
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        console.log(user.user._user.uid)
-
-
+      .then(user => {
         firebase
           .database()
           .ref('/StoryAppUsers')
@@ -40,7 +38,8 @@ export default class Register extends Component {
           .set({
             email,
             password,
-            name
+            name,
+            id: user.user._user.uid,
           })
           .then(s => console.log(s))
           .catch(e => console.log(e));

@@ -62,7 +62,6 @@ const AppStack = createStackNavigator({
   CompleteProfile: {
     screen: CompleteProfile,
     navigationOptions: {
-      // header: null,
       headerLeft: null,
     },
   },
@@ -101,14 +100,7 @@ const AppStack = createStackNavigator({
     },
   },
   Chat: {
-    screen: Chat,
-    navigationOptions: {
-      headerStyle: {
-        backgroundColor: '#633689',
-      },
-      headerTintColor: '#FFFFFF',
-      title: 'Chat',
-    },
+    screen: Chat
   },
 });
 

@@ -49,7 +49,9 @@ export default class Calls extends Component {
     return (
       <View>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Chat')}>
+          onPress={() =>
+            this.props.navigation.navigate('Chat', {userInfo: item})
+          }>
           <View style={styles.row}>
             <Image
               source={{

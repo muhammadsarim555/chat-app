@@ -14,10 +14,14 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
+// PACKAGES
+import {withNavigation} from 'react-navigation';
+import Search from 'react-native-vector-icons/Ionicons';
+
 // FILES
 import styles from './style';
 
-export default class Chat extends Component {
+class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -74,11 +78,28 @@ export default class Chat extends Component {
           image: 'https://www.bootdey.com/img/Content/avatar/avatar6.png',
         },
       ],
+      receiverName: '',
+      receiverId: '',
+      receiverEmail: '',
     };
     this.send = this.send.bind(this);
     this.reply = this.reply.bind(this);
     this.renderItem = this._renderItem.bind(this);
   }
+
+  static navigationOptions = ({navigation, screenProps}) => ({
+    headerTitleStyle: {color: 'white'},
+    title: navigation.state.params.userInfo.name,
+    headerStyle: {
+      backgroundColor: '#633689',
+      color: 'white',
+    },
+    headerLeft: (
+      <TouchableOpacity style={{paddingLeft: 10}} onPress={() => navigation.goBack()}>
+        <Search name="md-arrow-back" color="white" size={25} />
+      </TouchableOpacity>
+    ),
+  });
 
   reply() {
     var messages = this.state.messages;
@@ -164,3 +185,5 @@ export default class Chat extends Component {
     );
   }
 }
+
+export default withNavigation(Chat);

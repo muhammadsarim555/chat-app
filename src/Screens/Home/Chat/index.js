@@ -31,58 +31,7 @@ class Chat extends Component {
     super(props);
     this.state = {
       msg: '',
-      messages: [
-        // {
-        //   id: 1,
-        //   sent: true,
-        //   msg: 'Lorem ipsum dolor',
-        //   image: 'https://www.bootdey.com/img/Content/avatar/avatar1.png',
-        // },
-        // {
-        //   id: 2,
-        //   sent: true,
-        //   msg: 'sit amet, consectetuer',
-        //   image: 'https://www.bootdey.com/img/Content/avatar/avatar1.png',
-        // },
-        // {
-        //   id: 3,
-        //   sent: false,
-        //   msg: 'adipiscing elit. Aenean ',
-        //   image: 'https://www.bootdey.com/img/Content/avatar/avatar6.png',
-        // },
-        // {
-        //   id: 4,
-        //   sent: true,
-        //   msg: 'commodo ligula eget dolor.',
-        //   image: 'https://www.bootdey.com/img/Content/avatar/avatar1.png',
-        // },
-        // {
-        //   id: 5,
-        //   sent: false,
-        //   msg:
-        //     'Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes',
-        //   image: 'https://www.bootdey.com/img/Content/avatar/avatar6.png',
-        // },
-        // {
-        //   id: 6,
-        //   sent: true,
-        //   msg:
-        //     'nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo',
-        //   image: 'https://www.bootdey.com/img/Content/avatar/avatar1.png',
-        // },
-        // {
-        //   id: 7,
-        //   sent: false,
-        //   msg: 'rhoncus ut, imperdiet',
-        //   image: 'https://www.bootdey.com/img/Content/avatar/avatar6.png',
-        // },
-        // {
-        //   id: 8,
-        //   sent: false,
-        //   msg: 'a, venenatis vitae',
-        //   image: 'https://www.bootdey.com/img/Content/avatar/avatar6.png',
-        // },
-      ],
+      messages: [],
       receiverName: '',
       receiverId: '',
       receiverEmail: '',
@@ -110,6 +59,7 @@ class Chat extends Component {
 
   componentDidMount() {
     const {id} = this.props.navigation.state.params.userInfo;
+    const {receiverId} = this.state;
     const that = this;
     let messages = [];
 
@@ -122,7 +72,7 @@ class Chat extends Component {
     this.setState({receiverId: id});
   }
 
-  reply() {
+   reply() {
     var messages = this.state.messages;
     messages.push({
       id: Math.floor(Math.random() * 99999999999999999 + 1),
@@ -149,7 +99,9 @@ class Chat extends Component {
       db
         .ref('Messages/')
         .push(msgObj)
-        .then(success => this.setState({msg: ''}))
+        .then(success => {
+          this.setState({msg: ''});
+        })
         .catch(error => console.log(error, 'something went wrong!!!'));
     } else {
       alert('Can not be Empty!');
@@ -157,10 +109,17 @@ class Chat extends Component {
   }
 
   _renderItem = ({item}) => {
-    if (item.seen === false) {
+    const {receiverId} = this.state;
+
+    if (!item.receiverId === receiverId) {
       return (
         <View style={styles.eachMsg}>
-          <Image source={{uri: "https://www.bootdey.com/img/Content/avatar/avatar1.png"}} style={styles.userPic} />
+          <Image
+            source={{
+              uri: 'https://www.bootdey.com/img/Content/avatar/avatar1.png',
+            }}
+            style={styles.userPic}
+          />
           <View style={styles.msgBlock}>
             <Text style={styles.msgTxt}>{item.message}</Text>
           </View>
@@ -172,21 +131,35 @@ class Chat extends Component {
           <View style={styles.rightBlock}>
             <Text style={styles.rightTxt}>{item.message}</Text>
           </View>
-          <Image source={{uri: "https://www.bootdey.com/img/Content/avatar/avatar6.png"}} style={styles.userPic} />
+          <Image
+            source={{
+              uri: 'https://www.bootdey.com/img/Content/avatar/avatar6.png',
+            }}
+            style={styles.userPic}
+          />
         </View>
       );
     }
   };
 
   render() {
-    const {messages} = this.state;
+    const {messages, msg, receiverId} = this.state;
+    let filterMessages = [];
+
+    messages.map(v => {
+      if (v.receiverId === receiverId && v.senderId === currentUserId) {
+        filterMessages.push(v);
+      } else {
+        console.log('Kuch nahi ha');
+      }
+    });
 
     return (
       <View style={{flex: 1}}>
         <FlatList
           style={styles.list}
           extraData={this.state}
-          data={messages}
+          data={filterMessages}
           keyExtractor={(item, index) => index.toString()}
           renderItem={this.renderItem}
         />
@@ -197,6 +170,7 @@ class Chat extends Component {
               placeholder="Write a message..."
               underlineColorAndroid="transparent"
               onChangeText={msg => this.setState({msg})}
+              value={msg}
             />
           </View>
 

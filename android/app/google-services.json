@@ -8,20 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:171586657340:android:bb4957083d54a67be2f739",
+        "mobilesdk_app_id": "1:171586657340:android:007ce456156e27b1e2f739",
         "android_client_info": {
           "package_name": "com.whatsapp_story"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "171586657340-mm32733o3cpmfgg17ggb7sdo7r64gkss.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.whatsapp_story",
-            "certificate_hash": "e98e9b19630cdeab83217e9982d4f977343ed05e"
-          }
-        },
         {
           "client_id": "171586657340-hbv00bdqo3gqr3gmc5o0qe7cs8sf87j5.apps.googleusercontent.com",
           "client_type": 3

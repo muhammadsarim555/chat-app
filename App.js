@@ -20,6 +20,8 @@ import Login from './src/Screens/Login';
 import Navigation from './src/Navigation/stack';
 import Loader from "./src/Component/ActivityIndicator"
 
+console.disableYellowBox = true;
+
 const App = () => {
   return <Navigation />;
 };

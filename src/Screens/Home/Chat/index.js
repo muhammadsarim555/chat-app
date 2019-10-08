@@ -62,17 +62,31 @@ class Chat extends Component {
     const {receiverId} = this.state;
     const that = this;
     let messages = [];
+    let filterMessages = [];
 
     db.ref('Messages/').on('child_added', snapshot => {
       messages.push(snapshot.val());
 
+      // console.log({receiverId: id, currentUserId})
+      // console.log(currentUserId)
+
+      messages &&
+        messages.map(v => {
+          if (v.receiverId == id && v.senderId == currentUserId) {
+            // (v.senderId == currentUserId && v.receiverId == receiverId)
+            // filterMessages.push(v);
+            // console.log(v, 'filter');
+          } else {
+            console.log('Kuch nahi ha');
+          }
+        });
       that.setState({messages});
     });
 
     this.setState({receiverId: id});
   }
 
-   reply() {
+  reply() {
     var messages = this.state.messages;
     messages.push({
       id: Math.floor(Math.random() * 99999999999999999 + 1),
@@ -96,10 +110,10 @@ class Chat extends Component {
         seen: false,
       };
 
-      db
-        .ref('Messages/')
+      db.ref('Messages/')
         .push(msgObj)
         .then(success => {
+          console.log(receiverId, 'receiveruid');
           this.setState({msg: ''});
         })
         .catch(error => console.log(error, 'something went wrong!!!'));
@@ -111,21 +125,7 @@ class Chat extends Component {
   _renderItem = ({item}) => {
     const {receiverId} = this.state;
 
-    if (!item.receiverId === receiverId) {
-      return (
-        <View style={styles.eachMsg}>
-          <Image
-            source={{
-              uri: 'https://www.bootdey.com/img/Content/avatar/avatar1.png',
-            }}
-            style={styles.userPic}
-          />
-          <View style={styles.msgBlock}>
-            <Text style={styles.msgTxt}>{item.message}</Text>
-          </View>
-        </View>
-      );
-    } else {
+    if (item.senderId === currentUserId) {
       return (
         <View style={styles.rightMsg}>
           <View style={styles.rightBlock}>
@@ -139,27 +139,32 @@ class Chat extends Component {
           />
         </View>
       );
+    } else {
+      return (
+        <View style={styles.eachMsg}>
+          <Image
+            source={{
+              uri: 'https://www.bootdey.com/img/Content/avatar/avatar1.png',
+            }}
+            style={styles.userPic}
+          />
+          <View style={styles.msgBlock}>
+            <Text style={styles.msgTxt}>{item.message}</Text>
+          </View>
+        </View>
+      );
     }
   };
 
   render() {
     const {messages, msg, receiverId} = this.state;
-    let filterMessages = [];
-
-    messages.map(v => {
-      if (v.receiverId === receiverId && v.senderId === currentUserId) {
-        filterMessages.push(v);
-      } else {
-        console.log('Kuch nahi ha');
-      }
-    });
 
     return (
       <View style={{flex: 1}}>
         <FlatList
           style={styles.list}
           extraData={this.state}
-          data={filterMessages}
+          data={messages}
           keyExtractor={(item, index) => index.toString()}
           renderItem={this.renderItem}
         />

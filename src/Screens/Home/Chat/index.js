@@ -23,6 +23,7 @@ import firebase from 'react-native-firebase';
 import styles from './style';
 
 const currentUserId = firebase.auth().currentUser.uid;
+console.log(firebase.auth().currentUser._user.uid);
 
 const db = firebase.database();
 
@@ -65,24 +66,18 @@ class Chat extends Component {
     let filterMessages = [];
 
     db.ref('Messages/').on('child_added', snapshot => {
-      messages.push(snapshot.val());
+      if (
+        snapshot.val().receiverId === id &&
+        snapshot.val().senderId == currentUserId
+      ) {
+        messages.push(snapshot.val());
+        console.log(snapshot.val(), 'working');
+      } else {
+        console.log('Not founded!');
+      }
 
-      // console.log({receiverId: id, currentUserId})
-      // console.log(currentUserId)
-
-      messages &&
-        messages.map(v => {
-          if (v.receiverId == id && v.senderId == currentUserId) {
-            // (v.senderId == currentUserId && v.receiverId == receiverId)
-            // filterMessages.push(v);
-            // console.log(v, 'filter');
-          } else {
-            console.log('Kuch nahi ha');
-          }
-        });
       that.setState({messages});
     });
-
     this.setState({receiverId: id});
   }
 

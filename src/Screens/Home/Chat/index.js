@@ -67,11 +67,10 @@ class Chat extends Component {
 
     db.ref('Messages/').on('child_added', snapshot => {
       if (
-        snapshot.val().receiverId === id &&
-        snapshot.val().senderId == currentUserId
+        snapshot.val().senderId == currentUserId && snapshot.val().receiverId == id ||
+        snapshot.val().senderId == id && snapshot.val().receiverId == currentUserId
       ) {
         messages.push(snapshot.val());
-        console.log(snapshot.val(), 'working');
       } else {
         console.log('Not founded!');
       }
@@ -105,7 +104,8 @@ class Chat extends Component {
         seen: false,
       };
 
-      db.ref('Messages/')
+      db
+        .ref('Messages/')
         .push(msgObj)
         .then(success => {
           console.log(receiverId, 'receiveruid');
@@ -120,21 +120,7 @@ class Chat extends Component {
   _renderItem = ({item}) => {
     const {receiverId} = this.state;
 
-    if (item.senderId === currentUserId) {
-      return (
-        <View style={styles.rightMsg}>
-          <View style={styles.rightBlock}>
-            <Text style={styles.rightTxt}>{item.message}</Text>
-          </View>
-          <Image
-            source={{
-              uri: 'https://www.bootdey.com/img/Content/avatar/avatar6.png',
-            }}
-            style={styles.userPic}
-          />
-        </View>
-      );
-    } else {
+    if (item.senderId === receiverId) {
       return (
         <View style={styles.eachMsg}>
           <Image
@@ -146,6 +132,20 @@ class Chat extends Component {
           <View style={styles.msgBlock}>
             <Text style={styles.msgTxt}>{item.message}</Text>
           </View>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.rightMsg}>
+          <View style={styles.rightBlock}>
+            <Text style={styles.rightTxt}>{item.message}</Text>
+          </View>
+          <Image
+            source={{
+              uri: 'https://www.bootdey.com/img/Content/avatar/avatar6.png',
+            }}
+            style={styles.userPic}
+          />
         </View>
       );
     }

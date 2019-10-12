@@ -23,7 +23,6 @@ import firebase from 'react-native-firebase';
 import styles from './style';
 
 const currentUserId = firebase.auth().currentUser.uid;
-console.log(firebase.auth().currentUser._user.uid);
 
 const db = firebase.database();
 
@@ -36,9 +35,9 @@ class Chat extends Component {
       receiverName: '',
       receiverId: '',
       receiverEmail: '',
+      noChat: false,
     };
     this.send = this.send.bind(this);
-    this.reply = this.reply.bind(this);
     this.renderItem = this._renderItem.bind(this);
   }
 
@@ -67,28 +66,20 @@ class Chat extends Component {
 
     db.ref('Messages/').on('child_added', snapshot => {
       if (
-        snapshot.val().senderId == currentUserId && snapshot.val().receiverId == id ||
-        snapshot.val().senderId == id && snapshot.val().receiverId == currentUserId
+        (snapshot.val().senderId == currentUserId &&
+          snapshot.val().receiverId == id) ||
+        (snapshot.val().senderId == id &&
+          snapshot.val().receiverId == currentUserId)
       ) {
         messages.push(snapshot.val());
       } else {
+        this.setState({noChat: true});
         console.log('Not founded!');
       }
 
       that.setState({messages});
     });
     this.setState({receiverId: id});
-  }
-
-  reply() {
-    var messages = this.state.messages;
-    messages.push({
-      id: Math.floor(Math.random() * 99999999999999999 + 1),
-      sent: false,
-      msg: this.state.msg,
-      image: 'https://www.bootdey.com/img/Content/avatar/avatar6.png',
-    });
-    this.setState({msg: '', messages: messages});
   }
 
   send() {
@@ -152,17 +143,24 @@ class Chat extends Component {
   };
 
   render() {
-    const {messages, msg, receiverId} = this.state;
+    const {messages, msg, receiverId, noChat} = this.state;
 
     return (
       <View style={{flex: 1}}>
-        <FlatList
-          style={styles.list}
-          extraData={this.state}
-          data={messages}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={this.renderItem}
-        />
+        {!noChat ? (
+          <FlatList
+            style={styles.list}
+            extraData={this.state}
+            data={messages}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={this.renderItem}
+          />
+        ) : (
+          <View
+            style={{flex: 1, justifyContent: 'center', alignSelf: 'center'}}>
+            <Text style={{fontSize: 22}}>No Messages</Text>
+          </View>
+        )}
         <View style={styles.footer}>
           <View style={styles.inputContainer}>
             <TextInput

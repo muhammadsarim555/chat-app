@@ -103,7 +103,7 @@ export default StyleSheet.create({
   },
   rightTxt: {
     fontSize: 15,
-    color: '#202020',
+    color: 'white',
     fontWeight: '600',
   },
 

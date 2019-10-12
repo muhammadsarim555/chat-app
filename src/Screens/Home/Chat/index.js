@@ -73,7 +73,7 @@ class Chat extends Component {
       ) {
         messages.push(snapshot.val());
       } else {
-        this.setState({noChat: true});
+        // this.setState({noChat: true});
         console.log('Not founded!');
       }
 

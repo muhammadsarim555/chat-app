@@ -9,6 +9,7 @@ export default styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: 10,
     justifyContent: 'space-between',
+
   },
   pic: {
     borderRadius: 25,
@@ -25,6 +26,7 @@ export default styles = StyleSheet.create({
     fontWeight: '600',
     color: '#222',
     fontSize: 15,
+
   },
   mblTxt: {
     fontWeight: '200',
@@ -39,9 +41,10 @@ export default styles = StyleSheet.create({
     fontWeight: '400',
     color: '#666',
     fontSize: 12,
+
   },
-  icon: {
+  icon:{
     height: 28,
-    width: 28,
-  },
+    width: 28, 
+  }
 });

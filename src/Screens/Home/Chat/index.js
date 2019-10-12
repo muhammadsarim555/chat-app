@@ -95,8 +95,7 @@ class Chat extends Component {
         seen: false,
       };
 
-      db
-        .ref('Messages/')
+      db.ref('Messages/')
         .push(msgObj)
         .then(success => {
           console.log(receiverId, 'receiveruid');

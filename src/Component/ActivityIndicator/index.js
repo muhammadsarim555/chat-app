@@ -8,7 +8,7 @@ export default class AuthLoader extends Component {
     firebase.auth().onAuthStateChanged(user => {
       const nav = this.props.navigation;
 
-      user ? nav.navigate('Status') : nav.navigate('Login');
+      user ? nav.navigate('Users') : nav.navigate('Login');
     });
   }
 
